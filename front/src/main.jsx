@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path="/" element={<App />} />
       <Route path="/LoginPage" element={<DarkMode> <LoginPage /> </DarkMode>} />
       <Route path="/RegisterPage" element={<DarkMode> <RegisterPage /> </DarkMode>} />
-      <Route path="/ProfilePage" element={<DarkMode> <ProfilePage/> </DarkMode>}/>
+      <Route path="/:id/ProfilePage" element={<DarkMode> <ProfilePage/> </DarkMode>}/>
     </Routes>
   </BrowserRouter>
 )
