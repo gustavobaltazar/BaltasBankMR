@@ -25,8 +25,20 @@ INSTALLED_APPS = [
     'rest_framework',
     'backend',
     'stdimage',
+    'djoser',
 
 ]
+
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
 
 
 MIDDLEWARE = [

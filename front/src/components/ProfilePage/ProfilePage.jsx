@@ -28,7 +28,7 @@ export const ProfilePage = () => {
           )}
         </div>
       </div>
-      <CardProfile name="Roberto" cpf="34983498493" accountType="a"/>
+      <CardProfile name="Roberto" cpf="34983498493" accountType="a" creditCard="9000" wallet="900"/>
     </>
   );
 }
