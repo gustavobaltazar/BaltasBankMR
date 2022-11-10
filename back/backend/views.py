@@ -7,6 +7,7 @@ from rest_framework import status
 from backend.models import Conta, Endereco, Usuario, Cliente, Cartao, Fatura, Transacao, Emprestimo, PagEmprestimo, Favorito, Extrato
 from backend.serializer import CartaoSerializer, ContaSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, PagEmprestimoSerializer, FavoritoSerializer, ExtratoSerializer
 from rest_framework.response import Response
+from random import choice
 
 
 class UsuarioViewSet(viewsets.ModelViewSet):
@@ -19,16 +20,16 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         if len(cpf) > 11 or len(cpf) < 0:
             return Response({'detalhe': 'Número de dígitos inválido!'}, status=status.HTTP_401_UNAUTHORIZED)
 
+        lista_conta = ['N', 'G', 'P']
         senha = request.data['senha']
-        tipo_conta = request.data['tipo_conta']
+        tipo_conta = choice(lista_conta)
+        email = request.data['email']
         senha_encriptada = make_password(senha)
-        # check_senha = check_password(
-        #     senha, senha_encriptada)
-        # print(check_senha)
-        data = Usuario(cpf=cpf, senha=senha_encriptada, tipo_conta=tipo_conta)
+        check_senha = check_password(senha, senha_encriptada)
+        data = Usuario(cpf=cpf, email=email, senha=senha_encriptada, tipo_conta=tipo_conta)
         data.save()
 
-        return Response({'detalhe': 'Usuario criadocom sucesso!'}, status=status.HTTP_201_CREATED)
+        return Response({'detalhe': 'Usuario criado com sucesso!'}, status=status.HTTP_201_CREATED)
 
 
 class ClienteViewSet(viewsets.ModelViewSet):
@@ -156,15 +157,17 @@ class PagEmprestimoViewSet(viewsets.ModelViewSet):
         emprestimo = Emprestimo.objects.get(id)
         parcelas = request.data['parcelas']
         juros = request.data['juros']
-        data = PagEmprestimo(emprestimo=emprestimo, parcelas=parcelas, juros=juros)
+        data = PagEmprestimo(emprestimo=emprestimo,
+                             parcelas=parcelas, juros=juros)
         data.save()
         return Response({'detalhe': 'Pagamento do emprestimo registrado com sucesso!'}, status=status.HTTP_201_CREATED)
+
 
 class FavoritoViewSet(viewsets.ModelViewSet):
     queryset = Favorito.objects.all()
     serializer_class = FavoritoSerializer
 
+
 class ExtratoViewSet(viewsets.ModelViewSet):
     queryset = Extrato.objects.all()
     serializer_class = ExtratoSerializer
-

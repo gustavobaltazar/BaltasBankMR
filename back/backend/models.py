@@ -2,7 +2,6 @@ from random import choices
 from django.db import models
 import uuid
 
-
 class Usuario(models.Model):
     NORMAL = 'N'
     GOLD = 'G'
@@ -16,11 +15,13 @@ class Usuario(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     cpf = models.CharField(max_length=15)
+    email = models.EmailField()
     senha = models.CharField(max_length=100)
     tipo_conta = models.CharField(max_length=1, choices=TIPOS_CONTA)
 
     def __str__(self) -> str:
         return self.cpf
+
 
 class Cartao(models.Model):
     id = models.UUIDField(
@@ -32,6 +33,7 @@ class Cartao(models.Model):
 
     def __str__(self) -> str:
         return self.numero_cartao
+
 
 class Cliente(models.Model):
     SEXO_MASCULINO = 'M'
@@ -53,7 +55,8 @@ class Cliente(models.Model):
 
     def __str__(self) -> str:
         return self.nome
-        
+
+
 class Endereco(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
@@ -65,6 +68,7 @@ class Endereco(models.Model):
 
     def __str__(self) -> str:
         return self.cidade
+
 
 class Conta(models.Model):
     ATIVO = 'A'
@@ -106,6 +110,7 @@ class Fatura(models.Model):
     def __str__(self) -> str:
         return str(self.valor_pago)
 
+
 class Transacao(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     TED = 'TE'
@@ -146,8 +151,10 @@ class Emprestimo(models.Model):
     def __str__(self) -> str:
         return str(self.cliente_emprestou)
 
+
 class PagEmprestimo(models.Model):
-    emprestimo = models.ForeignKey(Emprestimo, on_delete=models.DO_NOTHING, related_name='emprestimo')
+    emprestimo = models.ForeignKey(
+        Emprestimo, on_delete=models.DO_NOTHING, related_name='emprestimo')
     parcelas = models.IntegerField()
     juros = models.IntegerField()
 
@@ -157,12 +164,15 @@ class PagEmprestimo(models.Model):
 
 class Favorito(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    possui_favorito = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING, related_name="possui_favorito")
-    cliente_favoritado = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING, related_name="cliente_favoritado")
+    possui_favorito = models.ForeignKey(
+        Cliente, on_delete=models.DO_NOTHING, related_name="possui_favorito")
+    cliente_favoritado = models.ForeignKey(
+        Cliente, on_delete=models.DO_NOTHING, related_name="cliente_favoritado")
 
 
 class Extrato(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    emprestimo_feito = models.ForeignKey(Emprestimo, on_delete=models.DO_NOTHING)
+    emprestimo_feito = models.ForeignKey(
+        Emprestimo, on_delete=models.DO_NOTHING)
     transacao_feita = models.ForeignKey(Transacao, on_delete=models.DO_NOTHING)
     fatura_obtida = models.ForeignKey(Fatura, on_delete=models.DO_NOTHING)

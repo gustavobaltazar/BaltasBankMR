@@ -1,6 +1,7 @@
 import { Inputs } from "./Inputs"
 import { useState } from "react"
 import { validatePassword } from "../../Utils/Validators"
+import { getUser } from "../../../api/fetch"
 export const CardLogin = () => {
     const [loading, setLoading] = useState()
     const [form, setForm] = useState([])
@@ -15,7 +16,6 @@ export const CardLogin = () => {
             alert("Algo deu errado!")
         }
     }
-
     const handleChange = (event) => {
         console.log('Digitando...', event.target.name, event.target.value)
         setForm({ ...form, [event.target.name]: event.target.value })
