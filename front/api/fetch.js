@@ -22,13 +22,8 @@ function getUser() {
 }
 getUser()
 
-export function addNewUser(cpf, email, senha) {
-    const newUser = {
-        cpf: {cpf},
-        email: {email},
-        senha: {senha},
-    }
-    axios.post(url, newUser)
+export function addNewUser(userData) {
+    axios.post(url, userData)
     .then(response => {
         alert(JSON.stringify(response.data))
     })

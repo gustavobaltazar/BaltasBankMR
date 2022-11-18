@@ -1,4 +1,4 @@
-export const Inputs = ({type, placeholder, value, username, onChange = "", name}) => {
+export const Inputs = ({type, placeholder, value, username, onChange, name}) => {
     return (
         <div className="flex flex-col w-84 md:w-96">
             <span className="dark:text-black flex">{username}</span>

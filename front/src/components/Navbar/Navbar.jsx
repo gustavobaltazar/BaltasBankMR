@@ -24,7 +24,7 @@ export const Navbar = () => {
         </div>
         <div
           className={`md:flex md:flex-row md:justify=center md:items-center md:mb-12 md:gap-2 bg-escure md:text-black md:bg-transparent text-white absolute text-2xl py-4 dark:bg-white
-                md:dark:bg-transparent md:dark:text-white md:h-0 dark:text-escure md:static left-0 w-screen md:w-auto ease-in ${open
+                md:dark:bg-transparent md:dark:text-white md:h-0 dark:text-white dark:bg-escure md:static left-0 w-screen md:w-auto ease-in ${open
               ? "top-36 h-screen z-40 flex flex-col justify-center items-center text-center gap-1 transition-all duration-[500ms]"
               : "top-[-490px] h-0 transition-all ease-out duration-[500ms]"
             } `}
@@ -39,7 +39,7 @@ export const Navbar = () => {
           ) : (
             <BsFillSunFill
               size={30}
-              className="cursor-pointer text-white dark:text-escure md:dark:text-white"
+              className="cursor-pointer text-white dark:text-white md:dark:text-white"
               onClick={() => setTheme("light")}
             />
           )}

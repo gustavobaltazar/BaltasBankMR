@@ -14,6 +14,7 @@ module.exports = {
       }, 
       colors: {
         escure: "#1d1929",
+        plusEscure: "#222229",
         maincolor: "#8257E5",
         escurinho: "#323238",
         contentDark : "#121214",
