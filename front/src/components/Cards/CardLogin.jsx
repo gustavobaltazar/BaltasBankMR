@@ -1,7 +1,8 @@
 import { Inputs } from "./Inputs"
 import { useState } from "react"
 import { validatePassword } from "../../Utils/Validators"
-import { getUser } from "../../../api/fetch"
+import { addNewUser } from "../../../api/fetch"
+
 export const CardLogin = () => {
     const [loading, setLoading] = useState()
     const [form, setForm] = useState([])
@@ -39,6 +40,7 @@ export const CardLogin = () => {
                         <button href="#" type="submit" onClick={handleSubmit} disabled={loading === true | !validateInput()} className={`${validateInput() === true ? "botao" : "botao_invalido"}`}>Login</button>
                         <a className="text-maincolor" href="/RegisterPage">Não possuo uma conta!</a>
                     </div>
+                    <div id="renderResults" className="text-black">bolas</div>
                 </div>
             </div>
         </div>

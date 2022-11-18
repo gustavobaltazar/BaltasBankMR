@@ -5,7 +5,6 @@ import { CardLogin } from "../Cards/CardLogin";
 
 export const LoginPage = () => {
   const { theme, setTheme } = useTheme();
-  
   return (
     <>
       <div className="flex justify-between items-center">
