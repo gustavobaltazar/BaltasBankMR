@@ -1,6 +1,7 @@
 from random import choices
 from django.db import models
 import uuid
+from random import randint
 
 class Usuario(models.Model):
     NORMAL = 'N'
@@ -26,10 +27,23 @@ class Usuario(models.Model):
 class Cartao(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
+    usuario = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING)
     numero_cartao = models.CharField(max_length=16)
     cvv = models.CharField(max_length=3)
     limite = models.DecimalField(max_digits=20, decimal_places=6)
     validade = models.DateField()
+
+    def save(self, *args, **kwargs):
+        self.numero_cartao = f"{randint(1000, 9999)} {randint(1000, 9999)} {randint(1000, 9999)} {randint(1000, 9999)}"
+        self.cvv = f"{randint(100, 999)}"
+        self.validade = f"{randint(1,12)}/{randint(30,35)}"
+        if self.usuario.tipo_conta == "N":
+            self.limite = float(randint(400, 2000))
+        elif self.usuario.tipo_conta == "G":
+            self.limite = float(randint(2000, 4500))
+        else: 
+            self.limite = float(randint(4500, 10000))
+        super(Cartao, self).save(*args, **kwargs)
 
     def __str__(self) -> str:
         return self.numero_cartao
@@ -51,7 +65,6 @@ class Cliente(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     idade = models.IntegerField()
     sexo = models.CharField(max_length=1, choices=SEXO_TIPOS)
-    cartao = models.ForeignKey(Cartao, on_delete=models.DO_NOTHING)
 
     def __str__(self) -> str:
         return self.nome
@@ -153,6 +166,7 @@ class Emprestimo(models.Model):
 
 
 class PagEmprestimo(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     emprestimo = models.ForeignKey(
         Emprestimo, on_delete=models.DO_NOTHING, related_name='emprestimo')
     parcelas = models.IntegerField()

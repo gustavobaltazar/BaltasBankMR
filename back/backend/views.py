@@ -9,7 +9,6 @@ from backend.serializer import CartaoSerializer, ContaSerializer, EnderecoSerial
 from rest_framework.response import Response
 from random import choice
 
-
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
@@ -39,7 +38,7 @@ class ClienteViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         nome = request.data['nome']
         sobrenome = request.data['sobrenome']
-        usuario = Usuario.objects.get()
+        usuario = Usuario.objects.get(id)
         idade = request.data['idade']
         sexo = request.data['sexo']
         data = Cliente(nome=nome, sobrenome=sobrenome,
@@ -69,11 +68,12 @@ class CartaoViewSet(viewsets.ModelViewSet):
     serializer_class = CartaoSerializer
 
     def create(self, request, *args, **kwargs):
+        usuario = Usuario.objects.get(id)
         numero_cartao = request.data['numero_cartao']
         cvv = request.data['cvv']
         limite = request.data['limite']
         validade = request.data['validade']
-        data = Cartao(numero_cartao=numero_cartao, cvv=cvv,
+        data = Cartao(usuario=usuario, numero_cartao=numero_cartao, cvv=cvv,
                       limite=limite, validade=validade)
         data.save()
         return Response({'detalhe': 'Cartão adicionado com sucesso!'}, status=status.HTTP_201_CREATED)
