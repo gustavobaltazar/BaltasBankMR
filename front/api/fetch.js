@@ -20,7 +20,7 @@ function getUser() {
         })
         .catch(error => console.log(error))
 }
-getUser()
+
 
 export function addNewUser(userData) {
     axios.post(url, userData)

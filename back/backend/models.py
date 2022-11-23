@@ -1,6 +1,5 @@
 from random import choices
 from django.db import models
-import uuid
 from random import randint
 
 class Usuario(models.Model):
@@ -13,9 +12,7 @@ class Usuario(models.Model):
         (GOLD, 'Gold'),
         (PLATINUM, 'Platinum'),
     ]
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    cpf = models.CharField(max_length=15)
+    cpf = models.CharField(primary_key=True, max_length=15)
     email = models.EmailField()
     senha = models.CharField(max_length=100)
     tipo_conta = models.CharField(max_length=1, choices=TIPOS_CONTA)
@@ -25,8 +22,6 @@ class Usuario(models.Model):
 
 
 class Cartao(models.Model):
-    id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False)
     usuario = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING)
     numero_cartao = models.CharField(max_length=16)
     cvv = models.CharField(max_length=3)
@@ -71,8 +66,6 @@ class Cliente(models.Model):
 
 
 class Endereco(models.Model):
-    id = models.UUIDField(
-        primary_key=True, default=uuid.uuid4, editable=False)
     cliente = models.ForeignKey(Cliente, on_delete=models.DO_NOTHING)
     cidade = models.CharField(max_length=100)
     estado = models.CharField(max_length=100)
@@ -91,7 +84,6 @@ class Conta(models.Model):
         (ATIVO, 'A'),
         (NAO_ATIVO, 'N')
     ]
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     carteira = models.DecimalField(max_digits=20, decimal_places=2)
     cartao_conta = models.ForeignKey(
@@ -103,7 +95,6 @@ class Conta(models.Model):
 
 
 class Fatura(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     STATUS_PAGO = 'P'
     STATUS_NAO_PAGO = 'NP'
 
@@ -125,7 +116,6 @@ class Fatura(models.Model):
 
 
 class Transacao(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     TED = 'TE'
     DOC = 'DO'
     BOLETO = 'BO'
@@ -153,7 +143,6 @@ class Transacao(models.Model):
 
 
 class Emprestimo(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     cliente_pedido = models.ForeignKey(
         Cliente, on_delete=models.DO_NOTHING, related_name='cliente_pedido')
     cliente_emprestou = models.ForeignKey(
@@ -166,7 +155,6 @@ class Emprestimo(models.Model):
 
 
 class PagEmprestimo(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     emprestimo = models.ForeignKey(
         Emprestimo, on_delete=models.DO_NOTHING, related_name='emprestimo')
     parcelas = models.IntegerField()
@@ -177,7 +165,6 @@ class PagEmprestimo(models.Model):
 
 
 class Favorito(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     possui_favorito = models.ForeignKey(
         Cliente, on_delete=models.DO_NOTHING, related_name="possui_favorito")
     cliente_favoritado = models.ForeignKey(
@@ -185,7 +172,6 @@ class Favorito(models.Model):
 
 
 class Extrato(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     emprestimo_feito = models.ForeignKey(
         Emprestimo, on_delete=models.DO_NOTHING)
     transacao_feita = models.ForeignKey(Transacao, on_delete=models.DO_NOTHING)

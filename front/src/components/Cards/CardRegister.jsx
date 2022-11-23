@@ -1,7 +1,6 @@
 import { Inputs } from "./Inputs"
 import { useState } from "react";
 import { addNewUser } from "../../../api/fetch"
-import { useEffect } from "react";
 
 export const CardRegister = () => {
     const [inputs, setInputs] = useState({
