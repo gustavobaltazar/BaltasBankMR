@@ -74,26 +74,6 @@ class Endereco(models.Model):
 
     def __str__(self) -> str:
         return self.cidade
-
-
-class Conta(models.Model):
-    ATIVO = 'A'
-    NAO_ATIVO = 'N'
-
-    CONTA_ATIVA = [
-        (ATIVO, 'A'),
-        (NAO_ATIVO, 'N')
-    ]
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    carteira = models.DecimalField(max_digits=20, decimal_places=2)
-    cartao_conta = models.ForeignKey(
-        Cartao, related_name='Cartao', on_delete=models.CASCADE)
-    conta_ativa = models.CharField(max_length=1, choices=CONTA_ATIVA)
-
-    def __str__(self) -> str:
-        return self.conta_ativa
-
-
 class Fatura(models.Model):
     STATUS_PAGO = 'P'
     STATUS_NAO_PAGO = 'NP'

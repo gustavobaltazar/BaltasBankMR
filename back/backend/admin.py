@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Cartao, Cliente, Conta, Emprestimo, Endereco, Extrato, Fatura, Favorito, PagEmprestimo, Usuario, Transacao
+from .models import Cartao, Cliente, Emprestimo, Endereco, Extrato, Fatura, Favorito, PagEmprestimo, Usuario, Transacao
 
 class UsuarioLista(admin.ModelAdmin):
     model = Usuario
@@ -20,11 +20,6 @@ class CartaoLista(admin.ModelAdmin):
     list_display = ['numero_cartao', 'validade']
 
 admin.site.register(Cartao, CartaoLista)
-
-class ContaLista(admin.ModelAdmin):
-    model = Conta
-    list_display = ['cliente', 'carteira', 'conta_ativa']
-admin.site.register(Conta, ContaLista)
 
 class EnderecoLista(admin.ModelAdmin):
     model = Endereco

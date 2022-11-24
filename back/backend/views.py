@@ -4,10 +4,11 @@ from django.shortcuts import render
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework import viewsets
 from rest_framework import status
-from backend.models import Conta, Endereco, Usuario, Cliente, Cartao, Fatura, Transacao, Emprestimo, PagEmprestimo, Favorito, Extrato
-from backend.serializer import CartaoSerializer, ContaSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, PagEmprestimoSerializer, FavoritoSerializer, ExtratoSerializer
+from backend.models import Endereco, Usuario, Cliente, Cartao, Fatura, Transacao, Emprestimo, PagEmprestimo, Favorito, Extrato
+from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, PagEmprestimoSerializer, FavoritoSerializer, ExtratoSerializer
 from rest_framework.response import Response
 from random import choice
+
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
@@ -26,7 +27,8 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         email = request.data['email']
         senha_encriptada = make_password(senha)
         check_senha = check_password(senha, senha_encriptada)
-        data = Usuario(cpf=cpf, email=email, senha=senha_encriptada, tipo_conta=tipo_conta)
+        data = Usuario(cpf=cpf, email=email,
+                       senha=senha_encriptada, tipo_conta=tipo_conta)
         data.save()
 
         return Response({'detalhe': 'Usuario criado com sucesso!'}, status=status.HTTP_201_CREATED)
@@ -54,7 +56,8 @@ class EnderecoViewSet(viewsets.ModelViewSet):
     serializer_class = EnderecoSerializer
 
     def create(self, request, *args, **kwargs):
-        cliente = Cliente.objects.get()
+        id = request.data.get('cliente')
+        cliente = Cliente.objects.get(id=id)
         cidade = request.data['cidade']
         bairro = request.data['bairro']
         estado = request.data['estado']
@@ -81,22 +84,6 @@ class CartaoViewSet(viewsets.ModelViewSet):
                       limite=limite, validade=validade)
         data.save()
         return Response({'detalhe': 'Cartão adicionado com sucesso!'}, status=status.HTTP_201_CREATED)
-
-
-class ContaViewSet(viewsets.ModelViewSet):
-    queryset = Conta.objects.all()
-    serializer_class = ContaSerializer
-
-    def create(self, request, *args, **kwargs):
-        id = request.data.get('usuario')
-        cliente = Cliente.objects.get(id=id)
-        carteira = request.data['carteira']
-        cartao_conta = Cartao.objects.get()
-        conta_ativa = request.data['conta_ativa']
-        data = Conta(cliente=cliente, carteira=carteira,
-                     cartao_conta=cartao_conta, conta_ativa=conta_ativa)
-        data.save()
-        return Response({'detalhe': 'Conta criada com sucesso!'}, status=status.HTTP_201_CREATED)
 
 
 class FaturaViewSet(viewsets.ModelViewSet):
