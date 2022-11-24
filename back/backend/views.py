@@ -12,6 +12,7 @@ from random import choice
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+    serializer = UsuarioSerializer(queryset, many=True)
 
     def create(self, request, *args, **kwargs):
         cpf = request.data['cpf']
@@ -38,7 +39,7 @@ class ClienteViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         nome = request.data['nome']
         sobrenome = request.data['sobrenome']
-        usuario = Usuario.objects.get(id)
+        usuario = Usuario.objects.get()
         idade = request.data['idade']
         sexo = request.data['sexo']
         data = Cliente(nome=nome, sobrenome=sobrenome,
