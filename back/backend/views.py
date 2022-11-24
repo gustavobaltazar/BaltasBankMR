@@ -37,9 +37,10 @@ class ClienteViewSet(viewsets.ModelViewSet):
     serializer_class = ClienteSerializer
 
     def create(self, request, *args, **kwargs):
+        id = request.data.get('usuario')
         nome = request.data['nome']
         sobrenome = request.data['sobrenome']
-        usuario = Usuario.objects.get()
+        usuario = Usuario.objects.get(cpf=id)
         idade = request.data['idade']
         sexo = request.data['sexo']
         data = Cliente(nome=nome, sobrenome=sobrenome,
@@ -87,7 +88,8 @@ class ContaViewSet(viewsets.ModelViewSet):
     serializer_class = ContaSerializer
 
     def create(self, request, *args, **kwargs):
-        cliente = Cliente.objects.get(id)
+        id = request.data.get('usuario')
+        cliente = Cliente.objects.get(id=id)
         carteira = request.data['carteira']
         cartao_conta = Cartao.objects.get()
         conta_ativa = request.data['conta_ativa']
