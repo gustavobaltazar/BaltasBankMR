@@ -26,7 +26,7 @@ class Cartao(models.Model):
     numero_cartao = models.CharField(max_length=16)
     cvv = models.CharField(max_length=3)
     limite = models.DecimalField(max_digits=20, decimal_places=6)
-    validade = models.DateField()
+    validade = models.CharField(max_length=6)
 
     def save(self, *args, **kwargs):
         self.numero_cartao = f"{randint(1000, 9999)} {randint(1000, 9999)} {randint(1000, 9999)} {randint(1000, 9999)}"

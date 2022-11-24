@@ -69,7 +69,9 @@ class CartaoViewSet(viewsets.ModelViewSet):
     serializer_class = CartaoSerializer
 
     def create(self, request, *args, **kwargs):
-        usuario = Usuario.objects.get(id)
+        id = request.data.get('usuario')
+        print(id)
+        usuario = Usuario.objects.get(cpf=id)
         numero_cartao = request.data['numero_cartao']
         cvv = request.data['cvv']
         limite = request.data['limite']
