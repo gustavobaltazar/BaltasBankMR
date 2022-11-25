@@ -38,7 +38,7 @@ admin.site.register(Transacao, TransacaoLista)
 
 class EmprestimoLista(admin.ModelAdmin):
     model = Emprestimo
-    list_display = ['cliente_pedido', 'cliente_emprestou', 'valor_emprestado']
+    list_display = ['cliente_de', 'cliente_para', 'valor_emprestado']
 admin.site.register(Emprestimo, EmprestimoLista)
 
 class PagEmprestimoLista(admin.ModelAdmin):

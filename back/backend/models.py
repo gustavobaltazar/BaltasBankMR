@@ -16,6 +16,7 @@ class Usuario(models.Model):
     email = models.EmailField()
     senha = models.CharField(max_length=100)
     tipo_conta = models.CharField(max_length=1, choices=TIPOS_CONTA)
+    saldo = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self) -> str:
         return self.cpf
@@ -36,7 +37,7 @@ class Cartao(models.Model):
             self.limite = float(randint(400, 2000))
         elif self.usuario.tipo_conta == "G":
             self.limite = float(randint(2000, 4500))
-        else: 
+        else:   
             self.limite = float(randint(4500, 10000))
         super(Cartao, self).save(*args, **kwargs)
 
@@ -123,11 +124,11 @@ class Transacao(models.Model):
 
 
 class Emprestimo(models.Model):
-    cliente_pedido = models.ForeignKey(
-        Cliente, on_delete=models.DO_NOTHING, related_name='cliente_pedido')
-    cliente_emprestou = models.ForeignKey(
-        Cliente, on_delete=models.DO_NOTHING, related_name='cliente_emprestou')
-    data_pagamento = models.DateField()
+    cliente_de = models.ForeignKey(
+        Cliente, on_delete=models.DO_NOTHING, related_name='cliente_de')
+    cliente_para = models.ForeignKey(
+        Cliente, on_delete=models.DO_NOTHING, related_name='cliente_para')
+    data_emprestimo = models.DateField(auto_now_add=True)
     valor_emprestado = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self) -> str:
