@@ -28,7 +28,7 @@ admin.site.register(Endereco, EnderecoLista)
 
 class FaturaLista(admin.ModelAdmin):
     model = Fatura
-    list_display = ['cliente', 'parcelas', 'data_pagamento', 'status_pagamento']
+    list_display = ['cliente', 'parcelas', 'status_pagamento']
 admin.site.register(Fatura, FaturaLista)
 
 class TransacaoLista(admin.ModelAdmin):

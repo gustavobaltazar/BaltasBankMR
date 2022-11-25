@@ -87,10 +87,9 @@ class Fatura(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     valor_pago = models.DecimalField(max_digits=20, decimal_places=2)
     parcelas = models.IntegerField()
-    data_pagamento = models.DateField()
     status_pagamento = models.CharField(max_length=2, choices=STATUS_PAGAMENTO)
 
-    list_display = [cliente, parcelas, data_pagamento, status_pagamento]
+    list_display = [cliente, parcelas, status_pagamento]
 
     def __str__(self) -> str:
         return str(self.valor_pago)
@@ -116,7 +115,6 @@ class Transacao(models.Model):
         Cliente, on_delete=models.DO_NOTHING, related_name='cliente')
     beneficiado = models.ForeignKey(
         Cliente, on_delete=models.DO_NOTHING, related_name='beneficiado')
-    data_transacao = models.DateField()
     valor_transferido = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self) -> str:
@@ -128,7 +126,6 @@ class Emprestimo(models.Model):
         Cliente, on_delete=models.DO_NOTHING, related_name='cliente_de')
     cliente_para = models.ForeignKey(
         Cliente, on_delete=models.DO_NOTHING, related_name='cliente_para')
-    data_emprestimo = models.DateField(auto_now_add=True)
     valor_emprestado = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self) -> str:

@@ -109,14 +109,14 @@ class TransacaoViewSet(viewsets.ModelViewSet):
     serializer_class = TransacaoSerializer
 
     def create(self, request, *args, **kwargs):
+        id = request.data.get('cliente')
         transacao = request.data['transacao']
-        cliente = Cliente.objects.get(id)
-        beneficiado = Cliente.objects.get(id)
-        data_transacao = request.data['data_transacao']
+        cliente = Cliente.objects.get(id=id)
+        beneficiado = Cliente.objects.get(cpf=id)
         valor_transferido = request.data['valor_transferido']
 
         data = Transacao(transacao=transacao, cliente=cliente, beneficiado=beneficiado,
-                         data_transacao=data_transacao, valor_transferido=valor_transferido)
+                         valor_transferido=valor_transferido)
         data.save()
 
         return Response({'detalhe': 'Transacao adicionada com sucesso!'}, status=status.HTTP_201_CREATED)
@@ -127,13 +127,15 @@ class EmprestimoViewSet(viewsets.ModelViewSet):
     serializer_class = EmprestimoSerializer
 
     def create(self, request, *args, **kwargs):
-        cliente_pedido = Cliente.objects.get(id)
-        cliente_emprestou = Cliente.objects.get(id)
-        data_pagamento = request.data['data_pagamento']
+        id = request.data.get('cliente_de')
+        cliente_para_id = request.data.get('cliente_para')
+        cliente_de = Cliente.objects.get(id=id)
+        cliente_para = Cliente.objects.get(id=cliente_para_id)
         valor_emprestado = request.data['valor_emprestado']
 
-        data = Emprestimo(cliente_pedido=cliente_pedido, cliente_emprestou=cliente_emprestou,
-                          data_pagamento=data_pagamento, valor_emprestado=valor_emprestado)
+        data = Emprestimo(cliente_de=cliente_de, cliente_para=cliente_para,
+                          valor_emprestado=valor_emprestado)
+        data.save()
 
         return Response({'detalhe': 'Emprestimo adicionado com sucesso!'}, status=status.HTTP_201_CREATED)
 
