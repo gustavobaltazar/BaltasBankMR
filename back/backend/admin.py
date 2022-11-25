@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from .models import Cartao, Cliente, Emprestimo, Endereco, Extrato, Fatura, Favorito, PagEmprestimo, Usuario, Transacao
+from .models import Cartao, Cliente, Emprestimo, Endereco, Extrato, Fatura, Favorito, Usuario, Transacao
 
 class UsuarioLista(admin.ModelAdmin):
     model = Usuario
-    list_display = ['cpf', 'tipo_conta']
+    list_display = ['cpf', 'tipo_conta', 'saldo']
 
 admin.site.register(Usuario, UsuarioLista)
 
@@ -38,13 +38,8 @@ admin.site.register(Transacao, TransacaoLista)
 
 class EmprestimoLista(admin.ModelAdmin):
     model = Emprestimo
-    list_display = ['cliente_de', 'cliente_para', 'valor_emprestado']
+    list_display = ['usuario_de', 'usuario_para', 'valor_emprestado']
 admin.site.register(Emprestimo, EmprestimoLista)
-
-class PagEmprestimoLista(admin.ModelAdmin):
-    model = PagEmprestimo
-    list_display = ['emprestimo','parcelas', 'juros']
-admin.site.register(PagEmprestimo, PagEmprestimoLista)
 
 class FavoritoLista(admin.ModelAdmin):
     model = Favorito

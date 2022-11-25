@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from backend.models import Cartao, Cliente, Emprestimo, Endereco, Extrato, Fatura, Favorito, PagEmprestimo, Transacao, Usuario
+from backend.models import Cartao, Cliente, Emprestimo, Endereco, Extrato, Fatura, Favorito, Transacao, Usuario
 
 class CartaoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,19 +31,9 @@ class FaturaSerializer(serializers.ModelSerializer):
         model = Fatura
         fields = '__all__'
 
-class FaturaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Fatura
-        fields = '__all__'
-
 class FavoritoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorito
-        fields = '__all__'
-
-class PagEmprestimoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PagEmprestimo
         fields = '__all__'
 
 class TransacaoSerializer(serializers.ModelSerializer):

@@ -16,7 +16,7 @@ class Usuario(models.Model):
     email = models.EmailField()
     senha = models.CharField(max_length=100)
     tipo_conta = models.CharField(max_length=1, choices=TIPOS_CONTA)
-    saldo = models.DecimalField(max_digits=20, decimal_places=2)
+    saldo = models.DecimalField(max_digits=20, decimal_places=2, blank=True)
 
     def __str__(self) -> str:
         return self.cpf
@@ -122,24 +122,14 @@ class Transacao(models.Model):
 
 
 class Emprestimo(models.Model):
-    cliente_de = models.ForeignKey(
-        Cliente, on_delete=models.DO_NOTHING, related_name='cliente_de')
-    cliente_para = models.ForeignKey(
-        Cliente, on_delete=models.DO_NOTHING, related_name='cliente_para')
+    usuario_de = models.ForeignKey(
+        Usuario, on_delete=models.DO_NOTHING, related_name='usuario_de')
+    usuario_para = models.ForeignKey(
+        Usuario, on_delete=models.DO_NOTHING, related_name='usuario_para')
     valor_emprestado = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __str__(self) -> str:
-        return str(self.cliente_emprestou)
-
-
-class PagEmprestimo(models.Model):
-    emprestimo = models.ForeignKey(
-        Emprestimo, on_delete=models.DO_NOTHING, related_name='emprestimo')
-    parcelas = models.IntegerField()
-    juros = models.IntegerField()
-
-    def __str__(self) -> str:
-        return str(self.emprestimo)
+        return str(self.cliente_de)
 
 
 class Favorito(models.Model):

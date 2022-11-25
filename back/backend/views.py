@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework import viewsets
 from rest_framework import status
-from backend.models import Endereco, Usuario, Cliente, Cartao, Fatura, Transacao, Emprestimo, PagEmprestimo, Favorito, Extrato
-from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, PagEmprestimoSerializer, FavoritoSerializer, ExtratoSerializer
+from backend.models import Endereco, Usuario, Cliente, Cartao, Fatura, Transacao, Emprestimo, Favorito, Extrato
+from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, FavoritoSerializer, ExtratoSerializer
 from rest_framework.response import Response
 from random import choice
 
@@ -27,7 +27,8 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         email = request.data['email']
         senha_encriptada = make_password(senha)
         check_senha = check_password(senha, senha_encriptada)
-        data = Usuario(cpf=cpf, email=email,
+        saldo = request.data['saldo']
+        data = Usuario(cpf=cpf, email=email, saldo=saldo,
                        senha=senha_encriptada, tipo_conta=tipo_conta)
         data.save()
 
@@ -127,34 +128,25 @@ class EmprestimoViewSet(viewsets.ModelViewSet):
     serializer_class = EmprestimoSerializer
 
     def create(self, request, *args, **kwargs):
-        id = request.data.get('cliente_de')
-        cliente_para_id = request.data.get('cliente_para')
-        cliente_de = Cliente.objects.get(id=id)
-        cliente_para = Cliente.objects.get(id=cliente_para_id)
+        id = request.data.get('usuario_de')
+        usuario_para_id = request.data.get('usuario_para')
+        usuario_de = Usuario.objects.get(cpf=id)
+        usuario_para = Usuario.objects.get(cpf=usuario_para_id)
         valor_emprestado = request.data['valor_emprestado']
 
-        data = Emprestimo(cliente_de=cliente_de, cliente_para=cliente_para,
+        data = Emprestimo(usuario_de=usuario_de, usuario_para=usuario_para,
                           valor_emprestado=valor_emprestado)
         data.save()
+
+        usuario_de.saldo = float(usuario_de.saldo) - float(valor_emprestado)
+        usuario_de.save()
+        usuario_para.saldo = float(valor_emprestado) + float(usuario_para.saldo)
+        usuario_para.save()
 
         return Response({'detalhe': 'Emprestimo adicionado com sucesso!'}, status=status.HTTP_201_CREATED)
 
     def __str__(self) -> str:
         return self.name
-
-
-class PagEmprestimoViewSet(viewsets.ModelViewSet):
-    queryset = PagEmprestimo.objects.all()
-    serializer_class = PagEmprestimoSerializer
-
-    def create(self, request, *args, **kwargs):
-        emprestimo = Emprestimo.objects.get(id)
-        parcelas = request.data['parcelas']
-        juros = request.data['juros']
-        data = PagEmprestimo(emprestimo=emprestimo,
-                             parcelas=parcelas, juros=juros)
-        data.save()
-        return Response({'detalhe': 'Pagamento do emprestimo registrado com sucesso!'}, status=status.HTTP_201_CREATED)
 
 
 class FavoritoViewSet(viewsets.ModelViewSet):
