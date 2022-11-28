@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = "http://localhost:8000/back/usuarios/"
+const url = "http://localhost:8000/usuarios/"
 const newUser = {
     cpf: "99999999999",
     email: "bubas@gmail.com",
