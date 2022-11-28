@@ -1,13 +1,15 @@
 import { Inputs } from "./Inputs"
 import { useState } from "react"
 import { validatePassword } from "../../Utils/Validators"
-import { addNewUser } from "../../../api/fetch"
+// import { addNewUser } from "../../../api/fetch"
 
 export const CardLogin = () => {
-    const [loading, setLoading] = useState()
-    const [form, setForm] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [form, setForm] = useState({
+        password: ''
+    })
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault()
         try {
             setLoading(true)
@@ -17,7 +19,7 @@ export const CardLogin = () => {
             alert("Algo deu errado!")
         }
     }
-    const handleChange = (event) => {
+    const handleChange = (event: any) => {
         console.log('Digitando...', event.target.name, event.target.value)
         setForm({ ...form, [event.target.name]: event.target.value })
         console.log("form", form)
@@ -37,7 +39,7 @@ export const CardLogin = () => {
                     <Inputs username="Usuário" type="text" placeholder="John Doe" onChange={handleChange} name="usuario" />
                     <Inputs username="Senha" type="password" placeholder="123" onChange={handleChange} name="password" />
                     <div className="flex gap-8">
-                        <button href="#" type="submit" onClick={handleSubmit} disabled={loading === true | !validateInput()} className={`${validateInput() === true ? "botao" : "botao_invalido"}`}>Login</button>
+                        <button type="submit" onClick={handleSubmit} disabled={loading === true || !validateInput()} className={`${validateInput() === true ? "botao" : "botao_invalido"}`}>Login</button>
                         <a className="text-maincolor" href="/RegisterPage">Não possuo uma conta!</a>
                     </div>
                     <div id="renderResults" className="text-black">bolas</div>

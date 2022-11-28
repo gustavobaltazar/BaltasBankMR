@@ -1,6 +1,6 @@
 import { Inputs } from "../Cards/Inputs"
 
-export function CardProfile({ name= "", accountType= "", wallet= "", creditCard= "" }) {
+export function CardProfile({ name = "", accountType = "", wallet = "", creditCard = "" }) {
     return (
         <div>
             <div className="text-center h-screen flex justify-center items-center">

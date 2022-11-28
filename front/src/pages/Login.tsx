@@ -1,11 +1,10 @@
 import { MdDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
-import { useTheme } from "../DarkmodeControl/Darkmode";
-import { CardProfile } from "./CardProfile";
+import { useTheme } from "../components/DarkmodeControl/Darkmode";
+import { CardLogin } from "../components/Cards/CardLogin";
 
-
-export const ProfilePage = () => {
-  const { theme, setTheme } = useTheme();
+export const Login = () => {
+  const { theme, setTheme }: any = useTheme();
   return (
     <>
       <div className="flex justify-between items-center">
@@ -16,19 +15,21 @@ export const ProfilePage = () => {
           {theme === "light" ? (
             <MdDarkMode
               size={30}
-              className="cursor-pointer"
+              className="cursor-pointer dark:text-white md:text-escure"
               onClick={() => setTheme("dark")}
             />
           ) : (
             <BsFillSunFill
               size={30}
-              className="cursor-pointer text-white"
+              className="cursor-pointer text-white dark:text-white md:dark:text-white"
               onClick={() => setTheme("light")}
             />
           )}
         </div>
       </div>
-      <CardProfile name="Roberto" cpf="34983498493" accountType="a" creditCard="9000" wallet="900"/>
+      <div className="centralize px-10">
+        <CardLogin />
+      </div>
     </>
   );
-}
+};

@@ -1,10 +1,11 @@
 import { MdDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
-import { useTheme } from "../DarkmodeControl/Darkmode";
-import { CardRegister } from "../Cards/CardRegister";
+import { useTheme } from "../components/DarkmodeControl/Darkmode";
+import { CardProfile } from "../components/Cards/CardProfile";
 
-export const RegisterPage = () => {
-  const { theme, setTheme } = useTheme();
+
+export const ProfilePage = () => {
+  const { theme, setTheme }: any = useTheme();
   return (
     <>
       <div className="flex justify-between items-center">
@@ -27,9 +28,7 @@ export const RegisterPage = () => {
           )}
         </div>
       </div>
-      <div className="centralize px-10">
-        <CardRegister />
-      </div>
+      <CardProfile name="Roberto" cpf="34983498493" accountType="a" creditCard="9000" wallet="900" />
     </>
   );
-};
+}

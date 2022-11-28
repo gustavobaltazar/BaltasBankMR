@@ -3,10 +3,11 @@ import { useTheme } from "../DarkmodeControl/Darkmode";
 import { MdDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
-  const { theme, setTheme } = useTheme();
-  console.log(theme);
+
+  const { theme, setTheme }: any = useTheme();
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -20,20 +21,20 @@ export const Navbar = () => {
           onClick={() => setOpen(!open)}
           className="text-3xl text-maincolor absolute right-10 top-24  cursor-pointer md:hidden"
         >
-          <ion-icon name={open ? "close" : "menu"}></ion-icon>
+          <div>{open ? "X" : "≡"}</div>
         </div>
         <div
-          className={`md:flex md:flex-row md:justify=center md:items-center md:mb-12 md:gap-2 bg-escure md:text-black md:bg-transparent text-white absolute text-2xl py-4 dark:bg-white
-                md:dark:bg-transparent md:dark:text-white md:h-0 dark:text-white dark:bg-escure md:static left-0 w-screen md:w-auto ease-in ${open
+          className={`md:flex md:flex-row md:justify=center md:items-center md:mb-12 md:gap-2 bg-white md:text-black md:bg-transparent absolute text-2xl py-4 dark:bg-escure
+                md:dark:bg-transparent md:dark:text-white md:h-0 dark:text-white md:static left-0 w-screen md:w-auto ease-in ${open
               ? "top-36 h-screen z-40 flex flex-col justify-center items-center text-center gap-1 transition-all duration-[500ms]"
               : "top-[-490px] h-0 transition-all ease-out duration-[500ms]"
             } `}
         >
-          
+
           {theme === "light" ? (
             <MdDarkMode
               size={30}
-              className="cursor-pointer text-white dark:text-white md:text-escure"
+              className="cursor-pointer dark:text-white md:text-escure"
               onClick={() => setTheme("dark")}
             />
           ) : (
@@ -48,22 +49,17 @@ export const Navbar = () => {
               <Links linkName="Home" />
             </div>
             <div className="border-b-2 w-full md:border-none md:select-none">
-              <Links linkName="Contato" />
-            </div>
-            <div className="border-b-2 w-full md:border-none md:select-none">
-              <Links linkName="Sobre" />
+              <Links linkName="Deposito" />
             </div>
             <div className="border-b-2 w-full md:border-none md:select-none">
               <Links linkName="Perfil" href="/ProfilePage" />
             </div>
           </div>
-
-          <a
-            href="/LoginPage"
+          <Link to="/LoginPage"
             className="text-white rounded-full transition-all duration-[500ms] bg-gradient-to-tl from-pink-500 via-maincolor to-maincolor bg-size-200 bg-pos-0 hover:bg-pos-100 text-center px-4 py-2 ml-2 md:text-center md:flex md:justify-center md:items-center md:select-none"
           >
             Login
-          </a>
+          </Link>
         </div>
       </div>
     </>

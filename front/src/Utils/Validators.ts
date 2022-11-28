@@ -1,4 +1,4 @@
-const validatePassword = (password) => {
+const validatePassword = (password: string) => {
     return password?.toString().length > 6
 }
 
