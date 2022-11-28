@@ -12,20 +12,20 @@ const updatedUser = {
     senha: "8787",
 }
 
-function getUser() {
-    axios.get(url)
-        .then(response => {
-            const data = response.data
-            renderResults.textContent = JSON.stringify(data)
-        })
-        .catch(error => console.log(error))
-}
+// function getUser() {
+//     axios.get(url)
+//         .then(response => {
+//             const data = response.data
+//             renderResults.textContent = JSON.stringify(data)
+//         })
+//         .catch(error => console.log(error))
+// }
 
 
-export function addNewUser(userData) {
+export async function addNewUser(userData: any) {
     axios.post(url, userData)
     .then(response => {
-        alert(JSON.stringify(response.data))
+        return(JSON.stringify(response.data))
     })
     .catch(err => console.log(err)) 
 }

@@ -1,15 +1,17 @@
 import { Inputs } from "./Inputs"
 import { useState } from "react";
-// import { addNewUser } from "../../../api/fetch"
+import { useMutation } from "@tanstack/react-query";
+import { addNewUser } from "../../../api/fetch"
 
 export const CardRegister = () => {
     const [inputs, setInputs] = useState({
         cpf: "",
         email: "",
         senha: "",
-        password: ""
     });
     const [message, setMessage] = useState("");
+
+    const postDataMutation = useMutation(addNewUser)
 
     const emailValidation = () => {
         const regEx = /[a-zA-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g
@@ -31,7 +33,7 @@ export const CardRegister = () => {
 
     function handleSubmit() {
         event?.preventDefault()
-        // addNewUser(inputs)
+        postDataMutation.mutate(inputs)
         console.log(inputs)
     }
 
@@ -43,7 +45,7 @@ export const CardRegister = () => {
                     <form onSubmit={handleSubmit} className="flex flex-col w-48 gap-6 justify-center items-center">
                         <Inputs username="Usuário" type="text" placeholder="Usuário" name="cpf" value={inputs.cpf} onChange={(event) => handleOnChange(event)} />
                         <Inputs username="Email" type="email" placeholder="Email" name="email" value={inputs.email} onChange={(event) => handleOnChange(event)} />
-                        <Inputs username="Senha" type="password" placeholder="Senha" name="senha" value={inputs.password} onChange={(event) => handleOnChange(event)} />
+                        <Inputs username="Senha" type="password" placeholder="Senha" name="senha" value={inputs.senha} onChange={(event) => handleOnChange(event)} />
 
                         <div className="flex gap-8">
 

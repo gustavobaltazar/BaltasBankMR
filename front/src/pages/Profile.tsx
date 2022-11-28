@@ -4,7 +4,7 @@ import { useTheme } from "../components/DarkmodeControl/Darkmode";
 import { CardProfile } from "../components/Cards/CardProfile";
 
 
-export const ProfilePage = () => {
+export function Profile() {
   const { theme, setTheme }: any = useTheme();
   return (
     <>
@@ -28,7 +28,7 @@ export const ProfilePage = () => {
           )}
         </div>
       </div>
-      <CardProfile name="Roberto" cpf="34983498493" accountType="a" creditCard="9000" wallet="900" />
+      <CardProfile name="Roberto" accountType="a" creditCard="9000" wallet="900" />
     </>
   );
 }

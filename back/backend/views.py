@@ -27,7 +27,7 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         email = request.data['email']
         senha_encriptada = make_password(senha)
         check_senha = check_password(senha, senha_encriptada)
-        saldo = request.data['saldo']
+        saldo = 0
         data = Usuario(cpf=cpf, email=email, saldo=saldo,
                        senha=senha_encriptada, tipo_conta=tipo_conta)
         data.save()

@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -23,5 +24,13 @@ export function App() {
     }
   ]);
 
-  return (<DarkMode><RouterProvider router={router} /></DarkMode>)
+  const queryClient = new QueryClient
+
+  return (
+    <DarkMode>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </DarkMode>
+  )
 }

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface LinksProps {
   linkName: string
   href?: string
@@ -6,9 +8,9 @@ interface LinksProps {
 export function Links({ linkName = "Error", href = "" }: LinksProps) {
   return (
     <div className="py-2">
-      <a className="hover:text-pink-500  md:visible lg:visible" href={href}>
+      <Link to={href} className="hover:text-pink-500  md:visible lg:visible">
         {linkName}
-      </a>
+      </Link>
     </div>
   );
 };

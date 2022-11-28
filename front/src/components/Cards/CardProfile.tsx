@@ -1,5 +1,3 @@
-import { Inputs } from "../Cards/Inputs"
-
 export function CardProfile({ name = "", accountType = "", wallet = "", creditCard = "" }) {
     return (
         <div>
