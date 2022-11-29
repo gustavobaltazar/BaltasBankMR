@@ -1,12 +1,13 @@
 import { Inputs } from "./Inputs"
 import { useState } from "react"
 import { validatePassword } from "../../Utils/Validators"
-import { tryLogin } from "../../fetchers/user"
+import { tryLogin, getOneUser } from "../../fetchers/user"
 import { useMutation } from "@tanstack/react-query"
-import { useNavigate } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 
 export const CardLogin = () => {
     const navigate = useNavigate()
+    const user = useLoaderData();
     const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({
         cpf: '',
@@ -15,8 +16,8 @@ export const CardLogin = () => {
 
     const tryLoginMutation = useMutation(tryLogin, {
         onSuccess: (data, context, variables) => {
-            if(data.status){
-                console.log('logou')
+            if (data.status) {
+                // console.log(getOneUser(form.cpf))
             }
         }
     })

@@ -5,6 +5,11 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = ['cpf', 'senha']
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = '__fields__'
 class CartaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cartao

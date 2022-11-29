@@ -21,7 +21,6 @@ const updatedUser = {
 //         .catch(error => console.log(error))
 // }
 
-
 export async function addNewUser(userData: any) {
     axios.post(`${url}/usuarios/`, userData)
     .then(response => {
@@ -38,12 +37,11 @@ export async function tryLogin(userData: any) {
         return err.response.data
     }
 }
-// addNewUser()
 
-function updateUser() {
-    axios.put(url, updatedUser)
-    .then(response => {})
-    .catch(err => console.log(err))
+export async function getOneUser(cpf: string){
+    const res = await axios.get(`${url}/usuarios/${cpf}`)
+
+    return res
 }
 
 

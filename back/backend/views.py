@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from rest_framework import viewsets
 from rest_framework import status
 from backend.models import Endereco, Usuario, Cliente, Cartao, Fatura, Transacao, Emprestimo, Favorito, Extrato
-from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, FavoritoSerializer, ExtratoSerializer, LoginSerializer
+from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, FavoritoSerializer, ExtratoSerializer, LoginSerializer, ProfileSerializer
 from rest_framework.response import Response
 from random import choice
 
@@ -52,6 +52,15 @@ class LoginViewSet(viewsets.ModelViewSet):
 
         except:
             return Response({'status': False, 'message': 'Usuario nao existe'}, status.HTTP_404_NOT_FOUND)
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Usuario.objects.all()
+    serializer_class = ProfileSerializer
+
+    def create(self, request, *args, **kwargs):
+        user = self.queryset.get(cpf=request.query_params.get('cpf'))
+        return Response({user: user})
 
 
 class ClienteViewSet(viewsets.ModelViewSet):
