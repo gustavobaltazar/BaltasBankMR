@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = "http://localhost:8000/usuarios/"
+const url = "http://localhost:8000"
 const newUser = {
     cpf: "99999999999",
     email: "bubas@gmail.com",
@@ -23,11 +23,20 @@ const updatedUser = {
 
 
 export async function addNewUser(userData: any) {
-    axios.post(url, userData)
+    axios.post(`${url}/usuarios/`, userData)
     .then(response => {
         return(JSON.stringify(response.data))
     })
     .catch(err => console.log(err)) 
+}
+
+export async function tryLogin(userData: any) {
+    try{
+        const res = await axios.post(`${url}/login/`, userData)
+        return res.data
+    }catch(err: any){
+        return err.response.data
+    }
 }
 // addNewUser()
 

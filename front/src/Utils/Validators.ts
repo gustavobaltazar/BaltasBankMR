@@ -1,5 +1,5 @@
 const validatePassword = (password: string) => {
-    return password?.toString().length > 6
+    return password?.toString().length > 2
 }
 
 export {

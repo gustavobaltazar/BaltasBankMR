@@ -47,6 +47,9 @@ class LoginViewSet(viewsets.ModelViewSet):
             user = self.queryset.get(cpf=request.data['cpf'])
             if (check_password(request.data['senha'], user.senha)):
                 return Response({'status': True, 'message': 'Usuario Logado!'}, status.HTTP_202_ACCEPTED)
+            else:
+                return Response({'status': False, 'message': 'senha incorreta'}, status.HTTP_404_NOT_FOUND)
+
         except:
             return Response({'status': False, 'message': 'Usuario nao existe'}, status.HTTP_404_NOT_FOUND)
 

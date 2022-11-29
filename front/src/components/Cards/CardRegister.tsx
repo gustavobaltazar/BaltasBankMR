@@ -1,8 +1,7 @@
 import { Inputs } from "./Inputs"
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { addNewUser } from "../../../api/fetch"
-
+import { addNewUser } from "../../fetchers/user"
 export const CardRegister = () => {
     const [inputs, setInputs] = useState({
         cpf: "",
