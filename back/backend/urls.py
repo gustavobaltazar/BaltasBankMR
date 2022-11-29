@@ -7,4 +7,5 @@ router.register('clientes', views.ClienteViewSet, basename='clientes')
 router.register('cartoes', views.CartaoViewSet, basename='cartoes')
 router.register('enderecos', views.EnderecoViewSet, basename='endereco')
 router.register('emprestimos', views.EmprestimoViewSet, basename='emprestimos')
+router.register('login', views.LoginViewSet, basename='login')
 urlpatterns = router.urls

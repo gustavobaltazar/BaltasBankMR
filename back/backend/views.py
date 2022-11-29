@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from rest_framework import viewsets
 from rest_framework import status
 from backend.models import Endereco, Usuario, Cliente, Cartao, Fatura, Transacao, Emprestimo, Favorito, Extrato
-from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, FavoritoSerializer, ExtratoSerializer
+from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, FavoritoSerializer, ExtratoSerializer, LoginSerializer
 from rest_framework.response import Response
 from random import choice
 
@@ -26,13 +26,29 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         tipo_conta = choice(lista_conta)
         email = request.data['email']
         senha_encriptada = make_password(senha)
-        check_senha = check_password(senha, senha_encriptada)
+        # check_senha = check_password(senha, senha_encriptada)
         saldo = 0
         data = Usuario(cpf=cpf, email=email, saldo=saldo,
                        senha=senha_encriptada, tipo_conta=tipo_conta)
         data.save()
 
         return Response({'detalhe': 'Usuario criado com sucesso!'}, status=status.HTTP_201_CREATED)
+
+
+class LoginViewSet(viewsets.ModelViewSet):
+    queryset = Usuario.objects.all()
+    serializer_class = LoginSerializer
+
+    def list(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    def create(self, request, *args, **kwargs):
+        try:
+            user = self.queryset.get(cpf=request.data['cpf'])
+            if (check_password(request.data['senha'], user.senha)):
+                return Response({'status': True, 'message': 'Usuario Logado!'}, status.HTTP_202_ACCEPTED)
+        except:
+            return Response({'status': False, 'message': 'Usuario nao existe'}, status.HTTP_404_NOT_FOUND)
 
 
 class ClienteViewSet(viewsets.ModelViewSet):
@@ -140,7 +156,8 @@ class EmprestimoViewSet(viewsets.ModelViewSet):
 
         usuario_de.saldo = float(usuario_de.saldo) - float(valor_emprestado)
         usuario_de.save()
-        usuario_para.saldo = float(valor_emprestado) + float(usuario_para.saldo)
+        usuario_para.saldo = float(valor_emprestado) + \
+            float(usuario_para.saldo)
         usuario_para.save()
 
         return Response({'detalhe': 'Emprestimo adicionado com sucesso!'}, status=status.HTTP_201_CREATED)

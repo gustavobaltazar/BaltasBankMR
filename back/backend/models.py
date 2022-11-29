@@ -2,6 +2,7 @@ from random import choices
 from django.db import models
 from random import randint
 
+
 class Usuario(models.Model):
     NORMAL = 'N'
     GOLD = 'G'
@@ -37,7 +38,7 @@ class Cartao(models.Model):
             self.limite = float(randint(400, 2000))
         elif self.usuario.tipo_conta == "G":
             self.limite = float(randint(2000, 4500))
-        else:   
+        else:
             self.limite = float(randint(4500, 10000))
         super(Cartao, self).save(*args, **kwargs)
 
@@ -75,6 +76,8 @@ class Endereco(models.Model):
 
     def __str__(self) -> str:
         return self.cidade
+
+
 class Fatura(models.Model):
     STATUS_PAGO = 'P'
     STATUS_NAO_PAGO = 'NP'

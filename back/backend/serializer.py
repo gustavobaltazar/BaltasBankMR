@@ -1,6 +1,10 @@
 from rest_framework import serializers
 from backend.models import Cartao, Cliente, Emprestimo, Endereco, Extrato, Fatura, Favorito, Transacao, Usuario
 
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ['cpf', 'senha']
 class CartaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cartao
