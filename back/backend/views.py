@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from rest_framework import viewsets
 from rest_framework import status
 from backend.models import Endereco, Usuario, Cliente, Cartao, Fatura, Transacao, Emprestimo, Favorito, Extrato
-from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, FavoritoSerializer, ExtratoSerializer, LoginSerializer, ProfileSerializer
+from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, FavoritoSerializer, ExtratoSerializer, LoginSerializer, ProfileSerializer, PegaCartaoSerializer
 from rest_framework.response import Response
 from random import choice
 
@@ -22,6 +22,7 @@ class UsuarioViewSet(viewsets.ModelViewSet):
             return Response({'detalhe': 'Número de dígitos inválido!'}, status=status.HTTP_401_UNAUTHORIZED)
 
         lista_conta = ['N', 'G', 'P']
+        nome = request.data["nome"]
         senha = request.data['senha']
         tipo_conta = choice(lista_conta)
         email = request.data['email']
@@ -29,7 +30,7 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         # check_senha = check_password(senha, senha_encriptada)
         saldo = 0
         data = Usuario(cpf=cpf, email=email, saldo=saldo,
-                       senha=senha_encriptada, tipo_conta=tipo_conta)
+                       senha=senha_encriptada, tipo_conta=tipo_conta, nome=nome)
         data.save()
 
         return Response({'detalhe': 'Usuario criado com sucesso!'}, status=status.HTTP_201_CREATED)
@@ -103,7 +104,6 @@ class CartaoViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         id = request.data.get('usuario')
-        print(id)
         usuario = Usuario.objects.get(cpf=id)
         numero_cartao = request.data['numero_cartao']
         cvv = request.data['cvv']
@@ -113,6 +113,21 @@ class CartaoViewSet(viewsets.ModelViewSet):
                       limite=limite, validade=validade)
         data.save()
         return Response({'detalhe': 'Cartão adicionado com sucesso!'}, status=status.HTTP_201_CREATED)
+
+
+class PegaCartaoViewSet(viewsets.ModelViewSet):
+    queryset = Cartao.objects.all()
+    serializer_class = PegaCartaoSerializer
+
+    def list(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    def create(self, request, *args, **kwargs):
+        try:
+            self.queryset.get(usuario=request.data['usuario'])
+            return Response(self.queryset.values().filter(usuario=request.data['usuario']), status=status.HTTP_200_OK)
+        except:
+            return Response({"status": False, "message": "Usuario não possui cartão registrado"}, status=status.HTTP_204_NO_CONTENT)
 
 
 class FaturaViewSet(viewsets.ModelViewSet):

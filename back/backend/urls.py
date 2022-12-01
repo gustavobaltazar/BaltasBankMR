@@ -8,6 +8,5 @@ router.register('cartoes', views.CartaoViewSet, basename='cartoes')
 router.register('enderecos', views.EnderecoViewSet, basename='endereco')
 router.register('emprestimos', views.EmprestimoViewSet, basename='emprestimos')
 router.register('login', views.LoginViewSet, basename='login')
-router.register('usuarios/ProfilePage/<str:cpf>',
-                views.ProfileViewSet, basename='ProfilePage')
+router.register('pega_cartao', views.PegaCartaoViewSet, basename='pega_cartao')
 urlpatterns = router.urls

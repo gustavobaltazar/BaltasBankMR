@@ -14,6 +14,7 @@ class Usuario(models.Model):
         (PLATINUM, 'Platinum'),
     ]
     cpf = models.CharField(primary_key=True, max_length=15)
+    nome = models.CharField(max_length=100)
     email = models.EmailField()
     senha = models.CharField(max_length=100)
     tipo_conta = models.CharField(max_length=1, choices=TIPOS_CONTA)
