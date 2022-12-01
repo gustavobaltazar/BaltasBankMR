@@ -4,9 +4,10 @@ import { MdDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useUserStore } from "../../stores/user";
 
 export const Navbar = () => {
-
+  const [user, logout] = useUserStore((state) => [state.user, state.logout])
   const { theme, setTheme }: any = useTheme();
   const [open, setOpen] = useState(false);
   return (
@@ -33,13 +34,13 @@ export const Navbar = () => {
 
           {theme === "light" ? (
             <MdDarkMode
-              size={30}
+              size={80}
               className="cursor-pointer dark:text-white md:text-escure"
               onClick={() => setTheme("dark")}
             />
           ) : (
             <BsFillSunFill
-              size={30}
+              size={80}
               className="cursor-pointer text-white dark:text-white md:dark:text-white"
               onClick={() => setTheme("light")}
             />
@@ -48,18 +49,26 @@ export const Navbar = () => {
             <div className="border-b-2 w-full md:border-none md:select-none">
               <Links linkName="Home" />
             </div>
-            <div className="border-b-2 w-full md:border-none md:select-none">
-              <Links linkName="Deposito" />
-            </div>
-            <div className="border-b-2 w-full md:border-none md:select-none">
-              <Links linkName="Perfil" href="/ProfilePage" />
-            </div>
           </div>
-          <Link to="/LoginPage"
-            className="text-white rounded-full transition-all duration-[500ms] bg-gradient-to-tl from-pink-500 via-maincolor to-maincolor bg-size-200 bg-pos-0 hover:bg-pos-100 text-center px-4 py-2 ml-2 md:text-center md:flex md:justify-center md:items-center md:select-none"
-          >
-            Login
-          </Link>
+          {!user
+            ?
+            (<Link to="/LoginPage"
+              className="text-white rounded-full transition-all duration-[500ms] bg-gradient-to-tl from-pink-500 via-maincolor to-maincolor bg-size-200 bg-pos-0 hover:bg-pos-100 text-center px-4 py-2 ml-2 md:text-center md:flex md:justify-center md:items-center md:select-none"
+            >
+              Login
+            </Link>)
+            :
+            (
+              <>
+                <div className="border-b-2 w-full md:border-none md:select-none">
+                  <Links linkName="Deposito" />
+                </div>
+                <div className="border-b-2 w-full md:border-none md:select-none">
+                  <Links linkName="Perfil" href={`/ProfilePage/${user.cpf}`} />
+                </div>
+                <button onClick={logout} className="text-white rounded-full transition-all duration-[500ms] bg-gradient-to-tl from-pink-500 via-maincolor to-maincolor bg-size-200 bg-pos-0 hover:bg-pos-100 text-center px-4 py-2 ml-2 md:text-center md:flex md:justify-center md:items-center md:select-none">Logout</button>
+              </>
+            )}
         </div>
       </div>
     </>

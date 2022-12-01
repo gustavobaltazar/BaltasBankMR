@@ -5,6 +5,7 @@ import { addNewUser } from "../../fetchers/user"
 export const CardRegister = () => {
     const [inputs, setInputs] = useState({
         cpf: "",
+        nome: "",
         email: "",
         senha: "",
     });
@@ -43,6 +44,7 @@ export const CardRegister = () => {
                     <h1 className="text-white text-2xl dark:text-black mb-8">Crie sua conta</h1>
                     <form onSubmit={handleSubmit} className="flex flex-col w-48 gap-6 justify-center items-center">
                         <Inputs username="Usuário" type="text" placeholder="Usuário" name="cpf" value={inputs.cpf} onChange={(event) => handleOnChange(event)} />
+                        <Inputs username="Nome" type="text" placeholder="Nome" name="nome" value={inputs.nome} onChange={(event) => handleOnChange(event)} />
                         <Inputs username="Email" type="email" placeholder="Email" name="email" value={inputs.email} onChange={(event) => handleOnChange(event)} />
                         <Inputs username="Senha" type="password" placeholder="Senha" name="senha" value={inputs.senha} onChange={(event) => handleOnChange(event)} />
 
