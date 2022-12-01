@@ -13,17 +13,6 @@ export const CardRegister = () => {
 
     const postDataMutation = useMutation(addNewUser)
 
-    const emailValidation = () => {
-        const regEx = /[a-zA-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g
-        if (regEx.test(inputs.email)) {
-            setMessage("Email válido")
-        } else if (!regEx.test(inputs.email) && inputs.email != "") {
-            setMessage("Email inválido")
-        } else {
-            setMessage("")
-        }
-    }
-
     const handleOnChange = (e: any) => {
         setInputs({
             ...inputs,

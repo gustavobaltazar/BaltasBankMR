@@ -6,7 +6,8 @@ interface User {
     email: string,
     senha: string,
     tipo_conta: string,
-    saldo: number
+    saldo: number,
+    nome: string
 }
 
 interface UserStore {

@@ -12,6 +12,10 @@ export function Profile() {
   const [user] = useUserStore((state) => [state.user])
   const card = useLoaderData()
 
+  useEffect(() => {
+    console.log()
+  })
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -34,7 +38,7 @@ export function Profile() {
           )}
         </div>
       </div>
-      <CardProfile name='sim' accountType="a" creditCard="9000" wallet="900" />
+      <CardProfile name={user?.nome} accountType={user?.tipo_conta} wallet={user?.saldo} creditCard={card.data[0]} />
     </>
   );
 }
