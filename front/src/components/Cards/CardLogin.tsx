@@ -1,7 +1,7 @@
 import { Inputs } from "./Inputs"
 import { useState } from "react"
 import { validatePassword } from "../../Utils/Validators"
-import { tryLogin, getOneUser } from "../../fetchers/user"
+import { tryLogin } from "../../fetchers/user"
 import { useMutation } from "@tanstack/react-query"
 import { useUserStore } from "../../stores/user"
 import { Notify } from 'notiflix'
@@ -17,7 +17,7 @@ export const CardLogin = () => {
     const tryLoginMutation = useMutation(tryLogin, {
         onSuccess: (data) => {
             if (data.status) {
-                getOneUser(form.cpf).then((data) => login(data.data))
+                login(form.cpf)
                 Notify.success('Logado!', { timeout: 2000 });
             }
         }

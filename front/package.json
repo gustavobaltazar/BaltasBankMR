@@ -12,6 +12,8 @@
     "@tanstack/react-query": "^4.18.0",
     "axios": "^1.2.0",
     "notiflix": "^3.2.5",
+    "phosphor-icons": "^1.4.2",
+    "phosphor-react": "^1.4.1",
     "react": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-pay-card": "^1.3.0",

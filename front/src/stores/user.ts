@@ -1,5 +1,7 @@
+import axios from "axios";
 import create from "zustand";
 import { persist } from 'zustand/middleware';
+import { url } from '../fetchers/user'
 
 interface User {
     cpf: string,
@@ -11,15 +13,18 @@ interface User {
 }
 
 interface UserStore {
-    user: User | null;
-    login: any
-    logout: any
+    user: User | null
+    login: (cpf: string) => void
+    logout: () => void
 }
 
 export const useUserStore = create<UserStore>()(persist((set) => ({
     user: null,
-    login: (data: User) => set(() => ({ user: data })),
-    logout: () => set(() => ({ user: null }))
+    login: async (cpf) => {
+        const { data } = await axios.get(`${url}/usuarios/${cpf}`)
+        set(() => ({ user: data }))
+    },
+    logout: () => set(() => ({ user: null })),
 }), {
     name: 'user-store',
     getStorage: () => localStorage

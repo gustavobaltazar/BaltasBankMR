@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = "http://localhost:8000"
+export const url = "http://localhost:8000"
 
 export async function addNewUser(userData: any) {
     axios.post(`${url}/usuarios/`, userData)
@@ -18,13 +18,12 @@ export async function tryLogin(userData: any) {
     }
 }
 
-export function getOneUser(cpf: string) {
-    return axios.get(`${url}/usuarios/${cpf}`)
-}
-
 export function getUserCard(cpf: string) {
     return axios.post(`${url}/pega_cartao/`, { usuario: cpf })
+}
 
+export function addInUserBalance(data: {}) {
+    return axios.post(`${url}/usuario_saldo/`, data)
 }
 
 
