@@ -3,7 +3,7 @@
 ## Bank project
 
 ## How to run:
-First you'll need to clone the repo to your local machine, to run the FRONTEND you need to install [Node](https://nodejs.org/en/) and [Python](https://www.python.org/downloads/release/python-3110/).
+First you'll need to clone the repo to your local machine, to run the FRONTEND you need to install [Node](https://nodejs.org/en/) and to run the BACKEND [Python](https://www.python.org/downloads/release/python-3110/).
 ### Clone Rep:
 
 ```bash
