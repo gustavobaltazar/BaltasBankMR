@@ -9,4 +9,5 @@ router.register('enderecos', views.EnderecoViewSet, basename='endereco')
 router.register('emprestimos', views.EmprestimoViewSet, basename='emprestimos')
 router.register('login', views.LoginViewSet, basename='login')
 router.register('pega_cartao', views.PegaCartaoViewSet, basename='pega_cartao')
+router.register('usuario_saldo',views.UsuarioAddValueViewSet, basename='usuario_saldo')
 urlpatterns = router.urls

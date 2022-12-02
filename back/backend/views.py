@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from rest_framework import viewsets
 from rest_framework import status
 from backend.models import Endereco, Usuario, Cliente, Cartao, Fatura, Transacao, Emprestimo, Favorito, Extrato
-from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, FavoritoSerializer, ExtratoSerializer, LoginSerializer, ProfileSerializer, PegaCartaoSerializer
+from backend.serializer import CartaoSerializer, EnderecoSerializer, UsuarioSerializer, ClienteSerializer, FaturaSerializer, TransacaoSerializer, EmprestimoSerializer, FavoritoSerializer, ExtratoSerializer, LoginSerializer, ProfileSerializer, PegaCartaoSerializer, SaldoUsuarioSerializer
 from rest_framework.response import Response
 from random import choice
 
@@ -34,6 +34,23 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         data.save()
 
         return Response({'detalhe': 'Usuario criado com sucesso!'}, status=status.HTTP_201_CREATED)
+
+class UsuarioAddValueViewSet(viewsets.ModelViewSet):
+    queryset = Usuario.objects.all()
+    serializer_class = SaldoUsuarioSerializer
+
+    def create(self, request, *args, **kwargs):
+        id = request.data.get('cpf')
+        usuario = Usuario.objects.get(cpf=id)
+        valor = request.data['saldo']
+
+        data = Usuario(cpf=usuario, saldo=valor)
+        data.save()
+
+        usuario.saldo = float(usuario.saldo) + float(valor)
+        usuario.save()
+        
+        return Response({'detalhe': 'Dinheiro adicionado com sucesso!'}, status=status.HTTP_201_CREATED)
 
 
 class LoginViewSet(viewsets.ModelViewSet):

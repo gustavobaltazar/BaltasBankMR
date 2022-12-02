@@ -13,6 +13,11 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Usuario
         fields = '__fields__'
 
+class SaldoUsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ['cpf','saldo']
+
 
 class CartaoSerializer(serializers.ModelSerializer):
     class Meta:
