@@ -1,7 +1,17 @@
 import { useState, useContext, createContext, useEffect } from "react";
-const themeContext = createContext();
+const themeContext = createContext<Context | undefined>({ theme: 'light', setTheme: undefined });
 
-export const DarkMode = ({ children }) => {
+export interface Context {
+  theme: any;
+  setTheme: React.Dispatch<React.SetStateAction<string>> | undefined;
+}
+
+interface DarkModeProps {
+  children: any
+}
+
+
+export function DarkMode({ children }: DarkModeProps) {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") !== "dark" ? "light" : "dark"
   );

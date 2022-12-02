@@ -1,11 +1,15 @@
 import { MdDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
-import { useTheme } from "../DarkmodeControl/Darkmode";
-import { CardProfile } from "./CardProfile";
+import { useTheme } from "../components/DarkmodeControl/Darkmode";
+import { CardProfile } from "../components/Cards/CardProfile";
+import { useLoaderData } from "react-router-dom";
+import { useUserStore } from "../stores/user";
 
+export function Profile() {
+  const { theme, setTheme }: any = useTheme();
+  const [user] = useUserStore((state) => [state.user])
+  const card = useLoaderData()
 
-export const ProfilePage = () => {
-  const { theme, setTheme } = useTheme();
   return (
     <>
       <div className="flex justify-between items-center">
@@ -28,7 +32,8 @@ export const ProfilePage = () => {
           )}
         </div>
       </div>
-      <CardProfile name="Roberto" cpf="34983498493" accountType="a" creditCard="9000" wallet="900"/>
+
+      <CardProfile name={user?.nome!} accountType={user?.tipo_conta} wallet={user?.saldo} creditCard={card!.data[0]} />
     </>
   );
-}
+} 

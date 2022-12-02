@@ -1,10 +1,11 @@
 import { MdDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
-import { useTheme } from "../DarkmodeControl/Darkmode";
-import { CardRegister } from "../Cards/CardRegister";
+import { useTheme } from "../components/DarkmodeControl/Darkmode";
+import { CardLogin } from "../components/Cards/CardLogin";
 
-export const RegisterPage = () => {
-  const { theme, setTheme } = useTheme();
+export const Login = () => {
+  const { theme, setTheme }: any = useTheme();
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -15,20 +16,20 @@ export const RegisterPage = () => {
           {theme === "light" ? (
             <MdDarkMode
               size={30}
-              className="cursor-pointer"
+              className="cursor-pointer dark:text-white md:text-escure"
               onClick={() => setTheme("dark")}
             />
           ) : (
             <BsFillSunFill
               size={30}
-              className="cursor-pointer text-white"
+              className="cursor-pointer text-white dark:text-white md:dark:text-white"
               onClick={() => setTheme("light")}
             />
           )}
         </div>
       </div>
       <div className="centralize px-10">
-        <CardRegister />
+        <CardLogin />
       </div>
     </>
   );
