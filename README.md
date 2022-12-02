@@ -3,7 +3,6 @@
 ##Bank project
 
 ### How to run:
-
 ## On front:
 *npm i
 *npm run dev
