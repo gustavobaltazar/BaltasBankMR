@@ -61,9 +61,6 @@ export const Navbar = () => {
             (
               <>
                 <div className="border-b-2 w-full md:border-none md:select-none">
-                  <Links linkName="Deposito" />
-                </div>
-                <div className="border-b-2 w-full md:border-none md:select-none">
                   <Links linkName="Perfil" href={`/ProfilePage/${user.cpf}`} />
                 </div>
                 <button onClick={logout} className="text-white rounded-full transition-all duration-[500ms] bg-gradient-to-tl from-pink-500 via-maincolor to-maincolor bg-size-200 bg-pos-0 hover:bg-pos-100 text-center px-4 py-2 ml-2 md:text-center md:flex md:justify-center md:items-center md:select-none">Logout</button>

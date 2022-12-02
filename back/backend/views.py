@@ -32,8 +32,10 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         data = Usuario(cpf=cpf, email=email, saldo=saldo,
                        senha=senha_encriptada, tipo_conta=tipo_conta, nome=nome)
         data.save()
+        Cartao.objects.create(usuario=data)
 
         return Response({'detalhe': 'Usuario criado com sucesso!'}, status=status.HTTP_201_CREATED)
+
 
 class UsuarioAddValueViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
@@ -49,7 +51,7 @@ class UsuarioAddValueViewSet(viewsets.ModelViewSet):
 
         usuario.saldo = float(usuario.saldo) + float(valor)
         usuario.save()
-        
+
         return Response({'detalhe': 'Dinheiro adicionado com sucesso!'}, status=status.HTTP_201_CREATED)
 
 
